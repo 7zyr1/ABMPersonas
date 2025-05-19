@@ -104,6 +104,8 @@ namespace ModeloABM
                 clear();
                 apagar();
             }
+            btnNuevo.Enabled = true;
+            btnSalir.Enabled = true;
         }
 
         private void btnSalir_Click(object sender, EventArgs e)
@@ -117,6 +119,10 @@ namespace ModeloABM
 
         private void btnNuevo_Click(object sender, EventArgs e)
         {
+            btnSalir.Enabled = false;
+            btnNuevo.Enabled = false;
+            btnEditar.Enabled = false;
+            btnBorrar.Enabled = false;
             tbApellido.Enabled = true;
             tbNombre.Enabled = true;
             coboxTipoDocumento.Enabled = true;
@@ -179,9 +185,14 @@ namespace ModeloABM
 
         private void btnBorrar_Click(object sender, EventArgs e)
         {
-            if(lbPersonas.SelectedItem != null)
+            DialogResult siOno = MessageBox.Show("Borrar los datos de la persona seleccionada?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (siOno == DialogResult.Yes)
             {
-                lbPersonas.Items.Remove(lbPersonas.SelectedItem);
+                if (lbPersonas.SelectedItem != null)
+                {
+                    lbPersonas.Items.Remove(lbPersonas.SelectedItem);
+                    btnBorrar.Enabled = false;
+                }
             }
         }
     }

@@ -3,20 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\Valentino\\dev\\source\\repos\\ModeloABM\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{0E386AB7-3EA7-415F-B8FA-3F6FC9B31C95}|ModeloABM\\ModeloABM.csproj|c:\\users\\valentino\\dev\\source\\repos\\modeloabm\\modeloabm\\frmmodeloamb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{0E386AB7-3EA7-415F-B8FA-3F6FC9B31C95}|ModeloABM\\ModeloABM.csproj|C:\\Users\\Valentino\\dev\\source\\repos\\ModeloABM\\modeloabm\\frmmodeloamb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0E386AB7-3EA7-415F-B8FA-3F6FC9B31C95}|ModeloABM\\ModeloABM.csproj|solutionrelative:modeloabm\\frmmodeloamb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0E386AB7-3EA7-415F-B8FA-3F6FC9B31C95}|ModeloABM\\ModeloABM.csproj|c:\\users\\valentino\\dev\\source\\repos\\modeloabm\\modeloabm\\persona.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0E386AB7-3EA7-415F-B8FA-3F6FC9B31C95}|ModeloABM\\ModeloABM.csproj|solutionrelative:modeloabm\\persona.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0E386AB7-3EA7-415F-B8FA-3F6FC9B31C95}|ModeloABM\\ModeloABM.csproj|C:\\Users\\Valentino\\dev\\source\\repos\\ModeloABM\\modeloabm\\frmmodeloamb.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0E386AB7-3EA7-415F-B8FA-3F6FC9B31C95}|ModeloABM\\ModeloABM.csproj|solutionrelative:modeloabm\\frmmodeloamb.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0E386AB7-3EA7-415F-B8FA-3F6FC9B31C95}|ModeloABM\\ModeloABM.csproj|C:\\Users\\Valentino\\dev\\source\\repos\\ModeloABM\\modeloabm\\frmmodeloamb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{0E386AB7-3EA7-415F-B8FA-3F6FC9B31C95}|ModeloABM\\ModeloABM.csproj|solutionrelative:modeloabm\\frmmodeloamb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0E386AB7-3EA7-415F-B8FA-3F6FC9B31C95}|ModeloABM\\ModeloABM.csproj|c:\\users\\valentino\\dev\\source\\repos\\modeloabm\\modeloabm\\frmmodeloamb.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0E386AB7-3EA7-415F-B8FA-3F6FC9B31C95}|ModeloABM\\ModeloABM.csproj|solutionrelative:modeloabm\\frmmodeloamb.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0E386AB7-3EA7-415F-B8FA-3F6FC9B31C95}|ModeloABM\\ModeloABM.csproj|C:\\Users\\Valentino\\dev\\source\\repos\\ModeloABM\\modeloabm\\persona.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0E386AB7-3EA7-415F-B8FA-3F6FC9B31C95}|ModeloABM\\ModeloABM.csproj|solutionrelative:modeloabm\\persona.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -40,14 +40,14 @@
               "RelativeDocumentMoniker": "ModeloABM\\frmModeloAMB.cs",
               "ToolTip": "C:\\Users\\Valentino\\dev\\source\\repos\\ModeloABM\\ModeloABM\\frmModeloAMB.cs*",
               "RelativeToolTip": "ModeloABM\\frmModeloAMB.cs*",
-              "ViewState": "AgIAAG4AAAAAAAAAAAAswIcAAAAkAAAAAAAAAA==",
+              "ViewState": "AgIAAIYAAAAAAAAAAAAgwGsAAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-17T00:36:20.759Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "frmModeloAMB.cs [Dise\u00F1o]",
               "DocumentMoniker": "C:\\Users\\Valentino\\dev\\source\\repos\\ModeloABM\\ModeloABM\\frmModeloAMB.cs",
               "RelativeDocumentMoniker": "ModeloABM\\frmModeloAMB.cs",
@@ -59,7 +59,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "Persona.cs",
               "DocumentMoniker": "C:\\Users\\Valentino\\dev\\source\\repos\\ModeloABM\\ModeloABM\\Persona.cs",
               "RelativeDocumentMoniker": "ModeloABM\\Persona.cs",
@@ -67,8 +67,7 @@
               "RelativeToolTip": "ModeloABM\\Persona.cs",
               "ViewState": "AgIAACwAAAAAAAAAAAAuwDUAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-17T16:58:23.309Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-17T16:58:23.309Z"
             },
             {
               "$type": "Document",
@@ -78,7 +77,7 @@
               "RelativeDocumentMoniker": "ModeloABM\\frmModeloAMB.Designer.cs",
               "ToolTip": "C:\\Users\\Valentino\\dev\\source\\repos\\ModeloABM\\ModeloABM\\frmModeloAMB.Designer.cs",
               "RelativeToolTip": "ModeloABM\\frmModeloAMB.Designer.cs",
-              "ViewState": "AgIAAHoBAAAAAAAAAAAnwJsBAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAPwAAAAAAAAAAAAnwJsBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-17T00:34:11.073Z",
               "EditorCaption": ""

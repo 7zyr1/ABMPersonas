@@ -42,7 +42,7 @@ namespace ModeloABM
         {
             return $"{nombre} {apellido}";
         }
-        public string MostrarPersonaSeleccionada(Persona personaSeleccionada)
+        /*public string MostrarPersonaSeleccionada(Persona personaSeleccionada)
         {
             return $"Nombre: {personaSeleccionada.nombre}\n" +
                 $"Apellido: {personaSeleccionada.apellido}\n" +
@@ -51,6 +51,6 @@ namespace ModeloABM
                 $"Estado Civil: {personaSeleccionada.estadoCivil}\n" +
                 $"Sexo: {personaSeleccionada.sexo} \n" +
                 $"Fallecido: {personaSeleccionada.fallecido}";
-        }
+        }*/
     }
 }
