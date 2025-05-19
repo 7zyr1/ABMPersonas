@@ -1,0 +1,10 @@
+C:\Users\Valentino\dev\source\repos\ModeloABM\ModeloABM\bin\Debug\ModeloABM.exe.config
+C:\Users\Valentino\dev\source\repos\ModeloABM\ModeloABM\bin\Debug\ModeloABM.exe
+C:\Users\Valentino\dev\source\repos\ModeloABM\ModeloABM\bin\Debug\ModeloABM.pdb
+C:\Users\Valentino\dev\source\repos\ModeloABM\ModeloABM\obj\Debug\ModeloABM.csproj.AssemblyReference.cache
+C:\Users\Valentino\dev\source\repos\ModeloABM\ModeloABM\obj\Debug\ModeloABM.frmModeloAMB.resources
+C:\Users\Valentino\dev\source\repos\ModeloABM\ModeloABM\obj\Debug\ModeloABM.Properties.Resources.resources
+C:\Users\Valentino\dev\source\repos\ModeloABM\ModeloABM\obj\Debug\ModeloABM.csproj.GenerateResource.cache
+C:\Users\Valentino\dev\source\repos\ModeloABM\ModeloABM\obj\Debug\ModeloABM.csproj.CoreCompileInputs.cache
+C:\Users\Valentino\dev\source\repos\ModeloABM\ModeloABM\obj\Debug\ModeloABM.exe
+C:\Users\Valentino\dev\source\repos\ModeloABM\ModeloABM\obj\Debug\ModeloABM.pdb
