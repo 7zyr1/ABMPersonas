@@ -166,7 +166,7 @@ namespace ModeloABM
             this.tableDatos.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.29214F));
             this.tableDatos.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 13.48315F));
             this.tableDatos.Size = new System.Drawing.Size(493, 356);
-            this.tableDatos.TabIndex = 1;
+            this.tableDatos.TabIndex = 0;
             // 
             // lblApellido
             // 
@@ -175,7 +175,7 @@ namespace ModeloABM
             this.lblApellido.Location = new System.Drawing.Point(186, 17);
             this.lblApellido.Name = "lblApellido";
             this.lblApellido.Size = new System.Drawing.Size(57, 16);
-            this.lblApellido.TabIndex = 0;
+            this.lblApellido.TabIndex = 1;
             this.lblApellido.Text = "Apellido";
             this.lblApellido.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
@@ -245,17 +245,12 @@ namespace ModeloABM
             this.tbApellido.Location = new System.Drawing.Point(249, 14);
             this.tbApellido.Name = "tbApellido";
             this.tbApellido.Size = new System.Drawing.Size(200, 22);
-            this.tbApellido.TabIndex = 1;
+            this.tbApellido.TabIndex = 2;
             // 
             // coboxTipoDocumento
             // 
             this.coboxTipoDocumento.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.coboxTipoDocumento.FormattingEnabled = true;
-            this.coboxTipoDocumento.Items.AddRange(new object[] {
-            "DNI",
-            "Pasaporte",
-            "CUIL",
-            "CUIT"});
             this.coboxTipoDocumento.Location = new System.Drawing.Point(249, 113);
             this.coboxTipoDocumento.Name = "coboxTipoDocumento";
             this.coboxTipoDocumento.Size = new System.Drawing.Size(200, 24);
@@ -371,6 +366,7 @@ namespace ModeloABM
             this.Name = "frmModeloAMB";
             this.RightToLeftLayout = true;
             this.Text = "A B M Personas";
+            this.Load += new System.EventHandler(this.frmModeloAMB_Load);
             this.tableDatos.ResumeLayout(false);
             this.tableDatos.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
