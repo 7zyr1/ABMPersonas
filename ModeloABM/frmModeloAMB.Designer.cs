@@ -404,4 +404,3 @@ namespace ModeloABM
         private TableLayoutPanel tableBotones;
     }
 }
-

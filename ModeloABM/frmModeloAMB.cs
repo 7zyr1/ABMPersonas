@@ -66,13 +66,13 @@ namespace ModeloABM
         {
             if (estaEditando)
             {
-                Persona personaseleccionada = (Persona)lbPersonas.SelectedItem;
-                personaseleccionada.apellido = tbApellido.Text;
-                personaseleccionada.nombre = tbNombre.Text;
-                personaseleccionada.tipoDocumento = coboxTipoDocumento.Text;
-                personaseleccionada.documento = int.Parse(tbDocumento.Text);
-                personaseleccionada.estadoCivil = coboxEstadoCivil.Text;
-                personaseleccionada.fallecido = cboxFallecido.Checked;
+                Persona personaSeleccionada = (Persona)lbPersonas.SelectedItem;
+                personaSeleccionada.apellido = tbApellido.Text;
+                personaSeleccionada.nombre = tbNombre.Text;
+                personaSeleccionada.tipoDocumento = coboxTipoDocumento.Text;
+                personaSeleccionada.documento = int.Parse(tbDocumento.Text);
+                personaSeleccionada.estadoCivil = coboxEstadoCivil.Text;
+                personaSeleccionada.fallecido = cboxFallecido.Checked;
                 estaEditando = false;
                 int index = lbPersonas.SelectedIndex;
                 lbPersonas.DataSource = null;
@@ -96,7 +96,11 @@ namespace ModeloABM
                 {
                     sexo = "Masculino";
                 }
-                agregarPersona(apellido, nombre, tipoDoc, documento, estadoCivil, sexo, fallecido);
+                Persona persona = new Persona(apellido, nombre, tipoDoc, documento, estadoCivil, sexo, fallecido);
+                listaPersonas.Add(persona);
+                AgregarEnDB(persona);
+                lbPersonas.DataSource = null;
+                lbPersonas.DataSource = listaPersonas;
             }
             clear();
             apagar();
@@ -138,7 +142,7 @@ namespace ModeloABM
             btnSalir.Enabled = true;
             estaEditando = false;
         }
-
+        //la parte de sobreescribir los datos esta en el boton grabar
         private void btnEditar_Click(object sender, EventArgs e)
         {
             btnSalir.Enabled = false;
@@ -238,14 +242,6 @@ namespace ModeloABM
             combo.DisplayMember = miTabla.Columns[1].ColumnName;
             combo.ValueMember = miTabla.Columns[0].ColumnName;
         }
-        public void agregarPersona(string apellido, string nombre, string tipoDoc, int doc, string estadoCivil, string sexo, bool fallecido)
-        {
-            Persona persona = new Persona(apellido, nombre, tipoDoc, doc, estadoCivil, sexo, fallecido);
-            listaPersonas.Add(persona);
-            lbPersonas.DataSource = null;
-            lbPersonas.DataSource = listaPersonas;
-            //AgregarEnDB(persona);
-        }
 
         private void CargarLista()
         {
@@ -278,30 +274,52 @@ namespace ModeloABM
                     sexo = "Masculino";
                 }
                 bool fallecido = Convert.ToBoolean(reader["fallecio"]);
-                agregarPersona(apellido, nombre, tipoDoc, documento, estadoCivil, sexo, fallecido);
+                Persona persona = new Persona(apellido, nombre, tipoDoc, documento, estadoCivil, sexo, fallecido);
+                listaPersonas.Add(persona);
+                lbPersonas.DataSource = null;
+                lbPersonas.DataSource = listaPersonas;
             }
             miConexion.Close();
         }
+        public void AgregarEnDB(Persona personaSeleccionada)
+        {
+            using (SqlConnection miConexion = new SqlConnection("Data Source=LAPTOP-7KUNN01M\\SQLEXPRESS;Initial Catalog=TUPPI;Integrated Security=True"))
+            {
+                miConexion.Open();
+                SqlCommand miComando = new SqlCommand();
+                miComando.Connection = miConexion;
+                miComando.CommandType = CommandType.Text;
+                miComando.CommandText = "INSERT INTO personas (apellido, nombres, tipo_documento, documento, estado_civil, sexo, fallecio) " +
+                                        "VALUES (@apellido, @nombres, @tipoDoc, @documento, @estadoCivil, @sexo, @fallecido)";
+                miComando.Parameters.AddWithValue("@apellido", personaSeleccionada.apellido);
+                miComando.Parameters.AddWithValue("@nombres", personaSeleccionada.nombre);
+                int tipoDocumentoDB = 0;
+                switch (personaSeleccionada.tipoDocumento)
+                {
+                    case "DNI": tipoDocumentoDB = 1; break;
+                    case "LE": tipoDocumentoDB = 2; break;
+                    case "LC": tipoDocumentoDB = 3; break;
+                    case "Cedula": tipoDocumentoDB = 4; break;
+                    case "Pasaporte": tipoDocumentoDB = 5; break;
+                }
+                miComando.Parameters.AddWithValue("@tipoDoc", tipoDocumentoDB);
+                miComando.Parameters.AddWithValue("@documento", personaSeleccionada.documento);
+                int estadoCivilDB = 0;
+                switch (personaSeleccionada.estadoCivil)
+                {
+                    case "Soltero": estadoCivilDB = 1; break;
+                    case "Casado": estadoCivilDB = 2; break;
+                    case "Viudo": estadoCivilDB = 3; break;
+                    case "Separado": estadoCivilDB = 4; break;
+                }
+                miComando.Parameters.AddWithValue("@estadoCivil", estadoCivilDB);
+                int sexoDB = personaSeleccionada.sexo == "Femenino" ? 1 : 2;
+                miComando.Parameters.AddWithValue("@sexo", sexoDB);
+                miComando.Parameters.AddWithValue("@fallecido", personaSeleccionada.fallecido);
 
-        //public void AgregarEnDB(Persona personaSeleccionada)
-        //{
-        //    //miConexion.Open();
-        //    using (SqlConnection conexion = new SqlConnection("TU_CONEXION"))
-        //        miComando = new SqlCommand();
-        //    miComando.Connection = conexion;
-        //    miComando.CommandType = CommandType.Text;
-        //    miComando.CommandText = "INSERT INTO personas (apellido, nombre, tipo_documento, documento, estado_civil, sexo, fallecido) " +
-        //                            "VALUES (@apellido, @nombre, @tipoDoc, @documento, @estadoCivil, @sexo, @fallecido)";
-        //    miComando.Parameters.AddWithValue("@apellido", personaSeleccionada.apellido);
-        //    miComando.Parameters.AddWithValue("@nombre", personaSeleccionada.nombre);
-        //    miComando.Parameters.AddWithValue("@tipoDoc", personaSeleccionada.tipoDocumento);
-        //    miComando.Parameters.AddWithValue("@documento", personaSeleccionada.documento);
-        //    miComando.Parameters.AddWithValue("@estadoCivil", personaSeleccionada.estadoCivil);
-        //    miComando.Parameters.AddWithValue("@sexo", personaSeleccionada.sexo);
-        //    miComando.Parameters.AddWithValue("@fallecido", personaSeleccionada.fallecido);
-            
-        //    miComando.ExecuteNonQuery();
-        //    //miConexion.Close();
-        //}
+                miComando.ExecuteNonQuery();
+                miConexion.Close();
+            }
+        }
     }
 }
