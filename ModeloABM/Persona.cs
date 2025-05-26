@@ -40,7 +40,7 @@ namespace ModeloABM
 
         public override string ToString()
         {
-            return $"{nombre} {apellido}";
+            return $"{nombre}, {apellido}";
         }
         /*public string MostrarPersonaSeleccionada(Persona personaSeleccionada)
         {

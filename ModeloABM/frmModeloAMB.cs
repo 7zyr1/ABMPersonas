@@ -66,41 +66,94 @@ namespace ModeloABM
         {
             if (estaEditando)
             {
-                Persona personaSeleccionada = (Persona)lbPersonas.SelectedItem;
-                personaSeleccionada.apellido = tbApellido.Text;
-                personaSeleccionada.nombre = tbNombre.Text;
-                personaSeleccionada.tipoDocumento = coboxTipoDocumento.Text;
-                personaSeleccionada.documento = int.Parse(tbDocumento.Text);
-                personaSeleccionada.estadoCivil = coboxEstadoCivil.Text;
-                personaSeleccionada.fallecido = cboxFallecido.Checked;
-                estaEditando = false;
-                int index = lbPersonas.SelectedIndex;
-                lbPersonas.DataSource = null;
-                lbPersonas.DataSource = listaPersonas;
-            }
+                using (SqlConnection miConexion = new SqlConnection("Data Source=LAPTOP-7KUNN01M\\SQLEXPRESS;Initial Catalog=TUPPI;Integrated Security=True"))
+                {
+                    miConexion.Open();
+                    SqlCommand miComando = new SqlCommand();
+                    Persona personaSeleccionada = (Persona)lbPersonas.SelectedItem;
+                    miComando.Connection = miConexion;
+                    miComando.CommandType = CommandType.Text;
+                    miComando.CommandText = @"update personas set apellido = @apellido, nombres = @nombre, tipo_documento = @tipoDocumento, estado_civil = @estadoCivil, sexo = @sexo, fallecio = @fallecio where documento = @documento";
+                    miComando.Parameters.AddWithValue("@documento", personaSeleccionada.documento);
+                    miComando.Parameters.AddWithValue("@apellido", tbApellido.Text);
+                    miComando.Parameters.AddWithValue("@nombre", tbNombre.Text);
+                    int tipoDocumentoDB = 0;
+                    switch (coboxTipoDocumento.Text)
+                    {
+                        case "DNI": tipoDocumentoDB = 1; break;
+                        case "LE": tipoDocumentoDB = 2; break;
+                        case "LC": tipoDocumentoDB = 3; break;
+                        case "Cedula": tipoDocumentoDB = 4; break;
+                        case "Pasaporte": tipoDocumentoDB = 5; break;
+                    }
+                    miComando.Parameters.AddWithValue("@tipoDocumento", tipoDocumentoDB);
+                    int estadoCivilDB = 0;
+                    switch (coboxEstadoCivil.Text)
+                    {
+                        case "Soltero": estadoCivilDB = 1; break;
+                        case "Casado": estadoCivilDB = 2; break;
+                        case "Viudo": estadoCivilDB = 3; break;
+                        case "Separado": estadoCivilDB = 4; break;
+                    }
+                    miComando.Parameters.AddWithValue("@estadoCivil", estadoCivilDB);
+                    bool fallecido = cboxFallecido.Checked;
+                    int sexoDB= 0;
+                    if (rbtnFemenino.Checked)
+                    {
+                        sexoDB = 1;
+                    }
+                    else if (rbtnMasculino.Checked)
+                    {
+                        sexoDB = 2;
+                    }
+                    miComando.Parameters.AddWithValue("@sexo", sexoDB);
+                    miComando.Parameters.AddWithValue("@fallecio", cboxFallecido.Checked);
+                    miComando.ExecuteNonQuery();
+                    estaEditando = false;
+                    listaPersonas.Clear();
+                    CargarLista();
+                    lbPersonas.DataSource = null;
+                    lbPersonas.DataSource = listaPersonas;
+                    miConexion.Close(); 
+                }
+             }
             else
             {
-                string apellido = tbApellido.Text;
-                string nombre = tbNombre.Text;
-                string tipoDoc = coboxTipoDocumento.Text;
-                int documento;
-                int.TryParse(tbDocumento.Text, out documento);
-                string estadoCivil = coboxEstadoCivil.Text;
-                string sexo = " ";
-                bool fallecido = cboxFallecido.Checked;
-                if (rbtnFemenino.Checked)
+                try
                 {
-                    sexo = "Femenino";
+                    string apellido = tbApellido.Text;
+                    string nombre = tbNombre.Text;
+                    string tipoDoc = coboxTipoDocumento.Text;
+                    int documento;
+                    int.TryParse(tbDocumento.Text, out documento);
+                    string estadoCivil = coboxEstadoCivil.Text;
+                    string sexo = " ";
+                    bool fallecido = cboxFallecido.Checked;
+                    if (rbtnFemenino.Checked)
+                    {
+                        sexo = "Femenino";
+                    }
+                    else if (rbtnMasculino.Checked)
+                    {
+                        sexo = "Masculino";
+                    }
+                    Persona persona = new Persona(apellido, nombre, tipoDoc, documento, estadoCivil, sexo, fallecido);
+                    listaPersonas.Add(persona);
+                    AgregarEnDB(persona);
+                    lbPersonas.DataSource = null;
+                    lbPersonas.DataSource = listaPersonas;
                 }
-                else if (rbtnMasculino.Checked)
+                catch (SqlException ex)
                 {
-                    sexo = "Masculino";
+                    if (ex.Number == 2627 || ex.Number == 2601)
+                    {
+                        MessageBox.Show("Ya existe una persona con ese documento.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error al insertar en la base de datos: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
-                Persona persona = new Persona(apellido, nombre, tipoDoc, documento, estadoCivil, sexo, fallecido);
-                listaPersonas.Add(persona);
-                AgregarEnDB(persona);
-                lbPersonas.DataSource = null;
-                lbPersonas.DataSource = listaPersonas;
             }
             clear();
             apagar();
@@ -202,6 +255,17 @@ namespace ModeloABM
                 {
                     Persona personaSeleccionada = (Persona)lbPersonas.SelectedItem;
                     listaPersonas.Remove(personaSeleccionada);
+                    using (SqlConnection miConexion = new SqlConnection("Data Source=LAPTOP-7KUNN01M\\SQLEXPRESS;Initial Catalog=TUPPI;Integrated Security=True"))
+                    {
+                        miConexion.Open();
+                        SqlCommand miComando = new SqlCommand();
+                        miComando.Connection = miConexion;
+                        miComando.CommandType = CommandType.Text;
+                        miComando.CommandText = @"delete from personas where documento = @documento";
+                        miComando.Parameters.AddWithValue("@documento", personaSeleccionada.documento);
+                        miComando.ExecuteNonQuery();
+                        miConexion.Close();
+                    }
                     btnBorrar.Enabled = false;
                     lbPersonas.DataSource = null;
                     lbPersonas.DataSource = listaPersonas;
@@ -279,46 +343,47 @@ namespace ModeloABM
                 lbPersonas.DataSource = null;
                 lbPersonas.DataSource = listaPersonas;
             }
+            reader.Close();
             miConexion.Close();
         }
         public void AgregarEnDB(Persona personaSeleccionada)
         {
             using (SqlConnection miConexion = new SqlConnection("Data Source=LAPTOP-7KUNN01M\\SQLEXPRESS;Initial Catalog=TUPPI;Integrated Security=True"))
             {
-                miConexion.Open();
-                SqlCommand miComando = new SqlCommand();
-                miComando.Connection = miConexion;
-                miComando.CommandType = CommandType.Text;
-                miComando.CommandText = "INSERT INTO personas (apellido, nombres, tipo_documento, documento, estado_civil, sexo, fallecio) " +
-                                        "VALUES (@apellido, @nombres, @tipoDoc, @documento, @estadoCivil, @sexo, @fallecido)";
-                miComando.Parameters.AddWithValue("@apellido", personaSeleccionada.apellido);
-                miComando.Parameters.AddWithValue("@nombres", personaSeleccionada.nombre);
-                int tipoDocumentoDB = 0;
-                switch (personaSeleccionada.tipoDocumento)
-                {
-                    case "DNI": tipoDocumentoDB = 1; break;
-                    case "LE": tipoDocumentoDB = 2; break;
-                    case "LC": tipoDocumentoDB = 3; break;
-                    case "Cedula": tipoDocumentoDB = 4; break;
-                    case "Pasaporte": tipoDocumentoDB = 5; break;
-                }
-                miComando.Parameters.AddWithValue("@tipoDoc", tipoDocumentoDB);
-                miComando.Parameters.AddWithValue("@documento", personaSeleccionada.documento);
-                int estadoCivilDB = 0;
-                switch (personaSeleccionada.estadoCivil)
-                {
-                    case "Soltero": estadoCivilDB = 1; break;
-                    case "Casado": estadoCivilDB = 2; break;
-                    case "Viudo": estadoCivilDB = 3; break;
-                    case "Separado": estadoCivilDB = 4; break;
-                }
-                miComando.Parameters.AddWithValue("@estadoCivil", estadoCivilDB);
-                int sexoDB = personaSeleccionada.sexo == "Femenino" ? 1 : 2;
-                miComando.Parameters.AddWithValue("@sexo", sexoDB);
-                miComando.Parameters.AddWithValue("@fallecido", personaSeleccionada.fallecido);
+                    miConexion.Open();
+                    SqlCommand miComando = new SqlCommand();
+                    miComando.Connection = miConexion;
+                    miComando.CommandType = CommandType.Text;
+                    miComando.CommandText = "INSERT INTO personas (apellido, nombres, tipo_documento, documento, estado_civil, sexo, fallecio) " +
+                                            "VALUES (@apellido, @nombres, @tipoDoc, @documento, @estadoCivil, @sexo, @fallecido)";
+                    miComando.Parameters.AddWithValue("@apellido", personaSeleccionada.apellido);
+                    miComando.Parameters.AddWithValue("@nombres", personaSeleccionada.nombre);
+                    int tipoDocumentoDB = 0;
+                    switch (personaSeleccionada.tipoDocumento)
+                    {
+                        case "DNI": tipoDocumentoDB = 1; break;
+                        case "LE": tipoDocumentoDB = 2; break;
+                        case "LC": tipoDocumentoDB = 3; break;
+                        case "Cedula": tipoDocumentoDB = 4; break;
+                        case "Pasaporte": tipoDocumentoDB = 5; break;
+                    }
+                    miComando.Parameters.AddWithValue("@tipoDoc", tipoDocumentoDB);
+                    miComando.Parameters.AddWithValue("@documento", personaSeleccionada.documento);
+                    int estadoCivilDB = 0;
+                    switch (personaSeleccionada.estadoCivil)
+                    {
+                        case "Soltero": estadoCivilDB = 1; break;
+                        case "Casado": estadoCivilDB = 2; break;
+                        case "Viudo": estadoCivilDB = 3; break;
+                        case "Separado": estadoCivilDB = 4; break;
+                    }
+                    miComando.Parameters.AddWithValue("@estadoCivil", estadoCivilDB);
+                    int sexoDB = personaSeleccionada.sexo == "Femenino" ? 1 : 2;
+                    miComando.Parameters.AddWithValue("@sexo", sexoDB);
+                    miComando.Parameters.AddWithValue("@fallecido", personaSeleccionada.fallecido);
 
-                miComando.ExecuteNonQuery();
-                miConexion.Close();
+                    miComando.ExecuteNonQuery();
+                    miConexion.Close();
             }
         }
     }
